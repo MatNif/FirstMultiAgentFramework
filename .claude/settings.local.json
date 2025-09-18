@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pytest tests/test_query_translator.py -v)",
+      "Bash(python -m pytest tests/test_query_translator.py::TestQueryTranslatorAgent::test_generate_assumptions -v)",
+      "Bash(python:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

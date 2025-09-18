@@ -1,0 +1,71 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "B001",
+        "height_ag": 15.0,
+        "floors_ag": 4,
+        "year_built": 2010,
+        "occupancy": "OFFICE",
+        "floor_area": 1200.0,
+        "description": "Modern office building"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [8.548, 47.376, 0],
+          [8.549, 47.376, 0],
+          [8.549, 47.377, 0],
+          [8.548, 47.377, 0],
+          [8.548, 47.376, 0]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "B002",
+        "height_ag": 12.0,
+        "floors_ag": 3,
+        "year_built": 2005,
+        "occupancy": "RESIDENTIAL",
+        "floor_area": 800.0,
+        "description": "Residential apartment building"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [8.549, 47.376, 0],
+          [8.550, 47.376, 0],
+          [8.550, 47.377, 0],
+          [8.549, 47.377, 0],
+          [8.549, 47.376, 0]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "B003",
+        "height_ag": 18.0,
+        "floors_ag": 5,
+        "year_built": 2015,
+        "occupancy": "RETAIL",
+        "floor_area": 1500.0,
+        "description": "Shopping center"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [8.548, 47.377, 0],
+          [8.549, 47.377, 0],
+          [8.549, 47.378, 0],
+          [8.548, 47.378, 0],
+          [8.548, 47.377, 0]
+        ]]
+      }
+    }
+  ]
+}

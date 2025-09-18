@@ -1,0 +1,28 @@
+{
+  "faq": [
+    {
+      "question": "What is CEA?",
+      "answer": "CEA (City Energy Analyst) is an open-source computational framework for the analysis and optimization of urban energy systems. It helps engineers and urban planners evaluate energy demands, design district energy systems, and optimize cooling/heating networks for buildings and districts."
+    },
+    {
+      "question": "Where do I put EPW weather files?",
+      "answer": "EPW (EnergyPlus Weather) files should be placed in your project directory or specified with the full path when running CEA scripts. Common locations include: ./weather/location.epw or ./examples/zurich.epw. Make sure the file path is accessible to CEA scripts."
+    },
+    {
+      "question": "What file formats does CEA support?",
+      "answer": "CEA supports several file formats: GeoJSON (.geojson) for building geometry, EPW (.epw) for weather data, CSV (.csv) for tabular data, Excel (.xlsx) for schedules and parameters, Shapefile (.shp) for geographic data, and YAML (.yml) for configuration files."
+    },
+    {
+      "question": "How do I analyze district cooling demand?",
+      "answer": "To analyze district cooling demand: 1) Prepare building geometry (zone.geojson), 2) Get weather data (location.epw), 3) Run thermal demand calculation scripts, 4) Use cooling system optimization tools. The CEA Assistant can help you create a step-by-step workflow for your specific case."
+    },
+    {
+      "question": "What is the difference between building and district analysis?",
+      "answer": "Building analysis focuses on individual structures (single building energy performance, HVAC sizing), while district analysis considers multiple buildings together (shared energy systems, district heating/cooling networks, urban-scale optimization). District analysis can identify opportunities for energy sharing and centralized systems."
+    },
+    {
+      "question": "How do I optimize cooling system costs?",
+      "answer": "Cost optimization involves: 1) Calculate cooling demands for all buildings, 2) Evaluate different cooling technologies (chillers, heat pumps, district cooling), 3) Consider distribution network costs, 4) Run optimization algorithms (genetic, linear programming), 5) Compare lifecycle costs including CAPEX and OPEX. CEA provides tools for each step."
+    }
+  ]
+}

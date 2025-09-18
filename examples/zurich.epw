@@ -1,0 +1,38 @@
+# This is a placeholder EPW file for Zurich, Switzerland
+# In a real implementation, this would be a full EnergyPlus Weather file
+# Download actual EPW files from: https://energyplus.net/weather
+#
+# Location: Zurich, Switzerland
+# Latitude: 47.38°N
+# Longitude: 8.55°E
+# Elevation: 556 m
+#
+# Weather data sources:
+# - Swiss Federal Office of Meteorology and Climatology (MeteoSwiss)
+# - EnergyPlus weather database
+#
+# Typical EPW file structure:
+# LOCATION,Zurich,CHE,SUI,SWEC,067000,47.38,8.55,1.0,556.0
+# DESIGN CONDITIONS,1,Climate Design Data 2009 ASHRAE Handbook
+# TYPICAL/EXTREME PERIODS,6,Summer=7/1 to 7/31,Winter=1/1 to 1/31,Spring=4/1 to 4/30,Autumn=10/1 to 10/31
+#
+# Hourly data format (8760 lines):
+# Year,Month,Day,Hour,Minute,Data Source and Uncertainty Flags,Dry Bulb Temperature {C},
+# Dew Point Temperature {C},Relative Humidity {%},Atmospheric Station Pressure {Pa},
+# Extraterrestrial Horizontal Radiation {Wh/m2},Extraterrestrial Direct Normal Radiation {Wh/m2},
+# Horizontal Infrared Radiation Intensity {Wh/m2},Global Horizontal Radiation {Wh/m2},
+# Direct Normal Radiation {Wh/m2},Diffuse Horizontal Radiation {Wh/m2},
+# Global Horizontal Illuminance {lux},Direct Normal Illuminance {lux},
+# Diffuse Horizontal Illuminance {lux},Zenith Luminance {Cd/m2},Wind Direction {deg},
+# Wind Speed {m/s},Total Sky Cover {.1},Opaque Sky Cover {.1},Visibility {km},
+# Ceiling Height {m},Present Weather Observation,Present Weather Codes,
+# Precipitable Water {mm},Aerosol Optical Depth {.001},Snow Depth {cm},
+# Days Since Last Snowfall {},Albedo {.01},Liquid Precipitation Depth {mm},
+# Liquid Precipitation Quantity {hr}
+#
+# Sample hourly data (placeholder - not real weather data):
+# 2023,1,1,1,0,A7A7A7A7A7A7A7A7A7A7A7A7A7A7A7A7A7A7A7A7,-2.5,-5.8,78,101325,0,0,265,0,0,0,0,0,0,0,45,3.2,8,8,20.0,77777,9,999999999,25,999,99999,99,999,0.0,0.0
+# 2023,1,1,2,0,A7A7A7A7A7A7A7A7A7A7A7A7A7A7A7A7A7A7A7A7,-3.1,-6.1,77,101320,0,0,263,0,0,0,0,0,0,0,52,3.5,8,8,18.0,77777,9,999999999,24,999,99999,99,999,0.0,0.0
+
+# For actual CEA analysis, please download a real EPW file for Zurich from:
+# https://energyplus.net/weather-location/europe_wmo_region_6/CHE/CHE_Zurich.067000_IWEC.epw
