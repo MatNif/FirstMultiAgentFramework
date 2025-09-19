@@ -6,7 +6,26 @@ import os
 from pathlib import Path
 from typing import Optional
 
-from pydantic import BaseSettings, Field, validator
+from pydantic import Field, field_validator
+
+try:
+    from pydantic_settings import BaseSettings
+except ImportError:
+    # Fallback for when pydantic-settings is not available
+    from pydantic import BaseModel
+    import dotenv
+    dotenv.load_dotenv()
+
+    class BaseSettings(BaseModel):
+        def __init__(self, **kwargs):
+            # Load from environment variables
+            for field_name, field_info in self.model_fields.items():
+                if field_name not in kwargs:
+                    env_name = field_info.alias or field_name.upper()
+                    env_value = os.getenv(env_name)
+                    if env_value is not None:
+                        kwargs[field_name] = env_value
+            super().__init__(**kwargs)
 from loguru import logger
 
 
@@ -61,13 +80,14 @@ class Settings(BaseSettings):
         description="Running in test mode"
     )
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
-        case_sensitive = False
+    model_config = {
+        "env_file": ".env",
+        "env_file_encoding": "utf-8",
+        "case_sensitive": False
+    }
 
-    @validator("cea_root")
-    def validate_cea_root(cls, v):
+    @field_validator("cea_root")
+    def validate_cea_root(cls, v, info):
         """Validate that CEA_ROOT exists or can be created"""
         path = Path(v)
         if not path.exists():
@@ -82,8 +102,8 @@ class Settings(BaseSettings):
 
         return str(path.resolve())
 
-    @validator("log_level")
-    def validate_log_level(cls, v):
+    @field_validator("log_level")
+    def validate_log_level(cls, v, info):
         """Validate log level"""
         valid_levels = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
         v_upper = v.upper()
@@ -91,15 +111,15 @@ class Settings(BaseSettings):
             raise ValueError(f"Invalid log level: {v}. Must be one of: {valid_levels}")
         return v_upper
 
-    @validator("script_discovery_timeout")
-    def validate_timeout(cls, v):
+    @field_validator("script_discovery_timeout")
+    def validate_timeout(cls, v, info):
         """Validate timeout is positive"""
         if v <= 0:
             raise ValueError("Script discovery timeout must be positive")
         return v
 
-    @validator("db_path")
-    def validate_db_path(cls, v):
+    @field_validator("db_path")
+    def validate_db_path(cls, v, info):
         """Validate database path"""
         path = Path(v)
 

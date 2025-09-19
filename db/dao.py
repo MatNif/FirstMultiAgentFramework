@@ -13,6 +13,34 @@ from .models import Script, ScriptSearchCriteria, Workflow, WorkflowSearchCriter
 class DAO:
     def __init__(self, db_path: str = "cea_assistant.db") -> None:
         self.db_path = db_path
+        self._connection = None
+
+    async def __aenter__(self):
+        """Async context manager entry"""
+        self._connection = await aiosqlite.connect(self.db_path)
+        self._connection.row_factory = aiosqlite.Row
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        """Async context manager exit"""
+        if self._connection:
+            await self._connection.close()
+            self._connection = None
+
+    async def execute_query(self, query: str, params: tuple = None):
+        """Execute a query and return cursor"""
+        if not self._connection:
+            raise RuntimeError("DAO must be used as async context manager")
+
+        if params:
+            return await self._connection.execute(query, params)
+        else:
+            return await self._connection.execute(query)
+
+    async def commit(self):
+        """Commit current transaction"""
+        if self._connection:
+            await self._connection.commit()
 
     async def initialize(self) -> None:
         """Initialize the database with schema"""
@@ -124,9 +152,21 @@ class DAO:
             scripts = []
             for row in rows:
                 script_data = dict(row)
-                script_data["inputs"] = json.loads(script_data["inputs"] or "[]")
-                script_data["outputs"] = json.loads(script_data["outputs"] or "[]")
-                script_data["tags"] = json.loads(script_data["tags"] or "[]")
+                # Handle potentially invalid JSON gracefully
+                try:
+                    script_data["inputs"] = json.loads(script_data["inputs"] or "[]")
+                except (json.JSONDecodeError, TypeError):
+                    script_data["inputs"] = []
+
+                try:
+                    script_data["outputs"] = json.loads(script_data["outputs"] or "[]")
+                except (json.JSONDecodeError, TypeError):
+                    script_data["outputs"] = []
+
+                try:
+                    script_data["tags"] = json.loads(script_data["tags"] or "[]")
+                except (json.JSONDecodeError, TypeError):
+                    script_data["tags"] = []
 
                 # Convert to datetime objects
                 if script_data["created_at"]:
@@ -181,9 +221,21 @@ class DAO:
             scripts = []
             for row in rows:
                 script_data = dict(row)
-                script_data["inputs"] = json.loads(script_data["inputs"] or "[]")
-                script_data["outputs"] = json.loads(script_data["outputs"] or "[]")
-                script_data["tags"] = json.loads(script_data["tags"] or "[]")
+                # Handle potentially invalid JSON gracefully
+                try:
+                    script_data["inputs"] = json.loads(script_data["inputs"] or "[]")
+                except (json.JSONDecodeError, TypeError):
+                    script_data["inputs"] = []
+
+                try:
+                    script_data["outputs"] = json.loads(script_data["outputs"] or "[]")
+                except (json.JSONDecodeError, TypeError):
+                    script_data["outputs"] = []
+
+                try:
+                    script_data["tags"] = json.loads(script_data["tags"] or "[]")
+                except (json.JSONDecodeError, TypeError):
+                    script_data["tags"] = []
 
                 # Convert to datetime objects
                 if script_data["created_at"]:
@@ -204,9 +256,21 @@ class DAO:
 
             if row:
                 script_data = dict(row)
-                script_data["inputs"] = json.loads(script_data["inputs"] or "[]")
-                script_data["outputs"] = json.loads(script_data["outputs"] or "[]")
-                script_data["tags"] = json.loads(script_data["tags"] or "[]")
+                # Handle potentially invalid JSON gracefully
+                try:
+                    script_data["inputs"] = json.loads(script_data["inputs"] or "[]")
+                except (json.JSONDecodeError, TypeError):
+                    script_data["inputs"] = []
+
+                try:
+                    script_data["outputs"] = json.loads(script_data["outputs"] or "[]")
+                except (json.JSONDecodeError, TypeError):
+                    script_data["outputs"] = []
+
+                try:
+                    script_data["tags"] = json.loads(script_data["tags"] or "[]")
+                except (json.JSONDecodeError, TypeError):
+                    script_data["tags"] = []
 
                 # Convert to datetime objects
                 if script_data["created_at"]:
@@ -252,8 +316,16 @@ class DAO:
 
             if row:
                 workflow_data = dict(row)
-                workflow_data["steps"] = json.loads(workflow_data["steps"])
-                workflow_data["tags"] = json.loads(workflow_data["tags"] or "[]")
+                # Handle potentially invalid JSON gracefully
+                try:
+                    workflow_data["steps"] = json.loads(workflow_data["steps"])
+                except (json.JSONDecodeError, TypeError):
+                    workflow_data["steps"] = []
+
+                try:
+                    workflow_data["tags"] = json.loads(workflow_data["tags"] or "[]")
+                except (json.JSONDecodeError, TypeError):
+                    workflow_data["tags"] = []
 
                 # Convert to datetime objects
                 if workflow_data["created_at"]:
@@ -306,8 +378,16 @@ class DAO:
             workflows = []
             for row in rows:
                 workflow_data = dict(row)
-                workflow_data["steps"] = json.loads(workflow_data["steps"])
-                workflow_data["tags"] = json.loads(workflow_data["tags"] or "[]")
+                # Handle potentially invalid JSON gracefully
+                try:
+                    workflow_data["steps"] = json.loads(workflow_data["steps"])
+                except (json.JSONDecodeError, TypeError):
+                    workflow_data["steps"] = []
+
+                try:
+                    workflow_data["tags"] = json.loads(workflow_data["tags"] or "[]")
+                except (json.JSONDecodeError, TypeError):
+                    workflow_data["tags"] = []
 
                 # Convert to datetime objects
                 if workflow_data["created_at"]:
